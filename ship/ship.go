@@ -35,14 +35,14 @@ func GenerateRandomShips(b *board.Board) {
 			// We choose a random index of the breadth slice and length slice
 		pickIndex:
 			rand.Seed(time.Now().UnixNano())
-			dx := rand.Intn(int(b.GetBoardLength()))
+			dx := rand.Intn(int(b.GetBoardHeight()))
 
 			rand.Seed(time.Now().UnixNano())
-			dy := rand.Intn(int(b.GetBoardBreadth()))
+			dy := rand.Intn(int(b.GetBoardWidth()))
 
 			var flag1 uint8 = 0
 
-			if (uint8(dx) + uint8(size)) < b.GetBoardBreadth() { // Checking if the sum(size + indices) is out of bounds
+			if (uint8(dx) + uint8(size)) < b.GetBoardWidth() { // Checking if the sum(size + indices) is out of bounds
 
 				for i := 0; i < size; i++ {
 					if (*b.PtrToBoard)[dy][dx+i] == board.Ship { // Checking if any indices of our chosen slice is already occupied by another ship.
@@ -73,12 +73,12 @@ func GenerateRandomShips(b *board.Board) {
 			// Horizontal index where the head of our ship will be placed
 		pickIndex2:
 			rand.Seed(time.Now().UnixNano())
-			dx := rand.Intn(int(b.GetBoardLength()))
+			dx := rand.Intn(int(b.GetBoardHeight()))
 
 			rand.Seed(time.Now().UnixNano())
-			dy := rand.Intn(int(b.GetBoardBreadth()))
+			dy := rand.Intn(int(b.GetBoardWidth()))
 
-			if (dy + size) < int(b.GetBoardBreadth()) { // There is enough size for us to create our ship
+			if (dy + size) < int(b.GetBoardHeight()) { // There is enough size for us to create our ship
 				// shipVert := make([]*board.Status, size)
 				var flag2 uint8 = 0
 

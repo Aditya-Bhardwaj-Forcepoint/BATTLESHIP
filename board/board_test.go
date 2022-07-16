@@ -6,8 +6,8 @@ import (
 )
 
 func TestCreateBoard(t *testing.T) {
-	brd := make([][]Status, 5) // Make outer slice of size == breadth
-	// Make inner slice of size == length
+	brd := make([][]Status, 5) // Make outer slice of size == width
+	// Make inner slice of size == Height
 	for i := range brd {
 		brd[i] = make([]Status, 10)
 	}
@@ -19,14 +19,14 @@ func TestCreateBoard(t *testing.T) {
 	}
 
 	expectedObject := Board{
-		length:     10,
-		breadth:    5,
+		height:     10,
+		width:      5,
 		PtrToBoard: &brd,
 	}
 
 	outputObject := *CreateBoard(10, 5)
 
-	if expectedObject.length != outputObject.length || expectedObject.breadth != outputObject.breadth {
+	if expectedObject.height != outputObject.height || expectedObject.width != outputObject.width {
 		t.Errorf("The outputObject : %+v != %+v : The expectedObject \n", outputObject, expectedObject)
 		t.Errorf("The ptr to board for outputObject contains : %+v \n", (*outputObject.PtrToBoard))
 		t.Errorf("The ptr to board for expectedObject contains : %+v \n", (*expectedObject.PtrToBoard))
@@ -37,37 +37,37 @@ func TestCreateBoard(t *testing.T) {
 	}
 }
 
-func TestGetBoardLength(t *testing.T) {
+func TestGetBoardHeight(t *testing.T) {
 	brd := Board{
-		length: 100,
+		height: 100,
 	}
 
-	var expectedLegth uint8 = 100
+	var expectedHeight uint8 = 100
 
-	actualLength := brd.GetBoardLength()
+	actualHeight := brd.GetBoardHeight()
 
-	if expectedLegth != actualLength {
-		t.Errorf("The expectedLegth : %d != %d : The actualLength \n", expectedLegth, actualLength)
+	if expectedHeight != actualHeight {
+		t.Errorf("The expectedHeight : %d != %d : The actualHeight \n", expectedHeight, actualHeight)
 	} else {
-		fmt.Printf("The expectedLegth : %d == %d : The actualLength \n", expectedLegth, actualLength)
-		fmt.Println("Both the expectedLegth and actualLength are the same.")
+		fmt.Printf("The expectedHeight : %d == %d : The actualHeight \n", expectedHeight, actualHeight)
+		fmt.Println("Both the expectedHeight and actualHeight are the same.")
 	}
 }
 
-func TestGetBoardBreadth(t *testing.T) {
+func TestGetBoardWidth(t *testing.T) {
 	brd := Board{
-		breadth: 50,
+		width: 50,
 	}
 
-	var expectedBreadth uint8 = 50
+	var expectedWidth uint8 = 50
 
-	actualBreadth := brd.GetBoardBreadth()
+	actualWidth := brd.GetBoardWidth()
 
-	if expectedBreadth != actualBreadth {
-		t.Errorf("The expectedBreadth : %d != %d : The actualBreadth \n", expectedBreadth, actualBreadth)
+	if expectedWidth != actualWidth {
+		t.Errorf("The expectedWidth : %d != %d : The actualWidth \n", expectedWidth, actualWidth)
 	} else {
-		fmt.Printf("The expectedBreadth : %d == %d : The actualBreadth \n", expectedBreadth, actualBreadth)
-		fmt.Println("Both the expectedBreadth and actualBreadth are the same.")
+		fmt.Printf("The expectedWidth : %d == %d : The actualWidth \n", expectedWidth, actualWidth)
+		fmt.Println("Both the expectedWidth and actualWidth are the same.")
 	}
 }
 
@@ -85,7 +85,7 @@ func TestPrintBoard(t *testing.T) {
 		}
 	}
 
-	outputBoard := *CreateBoard(10, 5)
+	outputBoard := *CreateBoard(5, 10)
 
 	for i := 0; i < 5; i++ {
 		for j := 0; j < 10; j++ {
@@ -119,8 +119,8 @@ func TestGetStatus(t *testing.T) {
 	}
 
 	brd := Board{
-		length:     40,
-		breadth:    20,
+		height:     40,
+		width:      20,
 		PtrToBoard: &arr,
 	}
 
@@ -149,8 +149,8 @@ func TestSetStatus(t *testing.T) {
 	}
 
 	brd := Board{
-		length:     40,
-		breadth:    20,
+		height:     40,
+		width:      20,
 		PtrToBoard: &arr,
 	}
 

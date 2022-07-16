@@ -5,8 +5,8 @@ import "fmt"
 
 // Structure of the Board
 type Board struct {
-	length     uint8
-	breadth    uint8
+	height     uint8
+	width      uint8
 	PtrToBoard *([][]Status)
 }
 
@@ -15,19 +15,19 @@ type Status string
 
 // Enum values taken by status
 const (
-	Miss  Status = "_"
+	Miss  Status = "^"
 	Hit   Status = "@"
 	Blank Status = "-"
 	Ship  Status = "S"
 )
 
 // Creates a new Board object
-func CreateBoard(ln, bh uint8) *Board {
+func CreateBoard(ht, wd uint8) *Board {
 
-	brd := make([][]Status, bh)
-	// Now we create the subslices inside each index of the main (breadth) slice.
+	brd := make([][]Status, ht)
+	// Now we create the subslices inside each index of the main (length) slice.
 	for i := range brd {
-		brd[i] = make([]Status, ln)
+		brd[i] = make([]Status, wd)
 	}
 
 	// Now we initialize each cell of our board with "Blank" status
@@ -38,40 +38,53 @@ func CreateBoard(ln, bh uint8) *Board {
 	}
 
 	return &Board{
-		length:     ln,
-		breadth:    bh,
+		height:     ht,
+		width:      wd,
 		PtrToBoard: &brd,
 	}
 }
 
 // Returns the length of the board object
-func (b *Board) GetBoardLength() uint8 {
-	return b.length
+func (b *Board) GetBoardHeight() uint8 {
+	return b.height
 }
 
 // Returns the breadth of the board object
-func (b *Board) GetBoardBreadth() uint8 {
-	return b.breadth
+func (b *Board) GetBoardWidth() uint8 {
+	return b.width
 }
+
+var i, j uint8
 
 // Prints the board
 func (b *Board) PrintBoard() {
-	fmt.Println("At present the warfield looks like :")
-	for i := 0; i < int(b.length); i++ {
-		for j := 0; j < int(b.breadth); j++ {
-			fmt.Print((*b.PtrToBoard)[i][j])
+
+	fmt.Printf("\nAt present the warfield looks like :\n\n")
+
+	for i = 0; i < b.GetBoardHeight(); i++ {
+		fmt.Printf("%d\t", i)
+		for j = 0; j < b.GetBoardWidth(); j++ {
+			fmt.Print("(", i, j, ") = ", (*b.PtrToBoard)[i][j], "\t")
+			// fmt.Print("(", i, j, ")", "\t")
 		}
 		fmt.Println()
 	}
-	fmt.Println()
+
+	fmt.Print("\n\n")
+
+	for j = 0; j < b.width; j++ { // Printing indices along the breadth
+		fmt.Printf("\t%d", j)
+	}
+
+	fmt.Printf("\n\n")
 }
 
 // Gets the status of the ( dx, dy)th cell of our board
-func (b *Board) GetStatus(dy, dx uint8) Status {
-	return (*b.PtrToBoard)[dy][dx]
+func (b *Board) GetStatus(dx, dy uint8) Status {
+	return (*b.PtrToBoard)[dx][dy]
 }
 
 // Sets the status of the ( dx, dy)th cell of our board
-func (b *Board) SetStatus(newStat Status, dy, dx uint8) {
-	(*b.PtrToBoard)[dy][dx] = newStat
+func (b *Board) SetStatus(newStat Status, dx, dy uint8) {
+	(*b.PtrToBoard)[dx][dy] = newStat
 }
