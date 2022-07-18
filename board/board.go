@@ -56,15 +56,15 @@ func (b *Board) GetBoardWidth() uint8 {
 
 var i, j uint8
 
-// Prints the board
-func (b *Board) PrintBoard() {
+// Prints the board for Developer
+func (b *Board) PrintBoardDev() {
 
 	fmt.Printf("\nAt present the warfield looks like :\n\n")
 
 	for i = 0; i < b.GetBoardHeight(); i++ {
 		fmt.Printf("%d\t", i)
 		for j = 0; j < b.GetBoardWidth(); j++ {
-			fmt.Print("(", i, j, ") = ", (*b.PtrToBoard)[i][j], "\t")
+			fmt.Print((*b.PtrToBoard)[i][j], "\t")
 			// fmt.Print("(", i, j, ")", "\t")
 		}
 		fmt.Println()

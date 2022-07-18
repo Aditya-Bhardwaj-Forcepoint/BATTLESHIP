@@ -31,9 +31,19 @@ func main() {
 	var w uint8
 	for { // Ask the player where he wants to attack untill all the ships are destroyed...
 
-		fmt.Print("Where do you want to attack : ")
+		fmt.Println("Where do you want to attack : ")
+		fmt.Println("Enter height coord:")
 		fmt.Scanln(&h)
+		if h < 0 || h > 255 {
+			fmt.Println("Invalid Input")
+			continue
+		}
+		fmt.Println("Enter width coord:")
 		fmt.Scanln(&w)
+		if w < 0 || w > 255 {
+			fmt.Println("Invalid Input")
+			continue
+		}
 
 		s := gameService.GamePlay(h, w, plr, brd)
 
