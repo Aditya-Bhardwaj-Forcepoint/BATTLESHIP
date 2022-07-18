@@ -1,7 +1,7 @@
 package ship
 
 import (
-	"battleship/board"
+	"battleship/components/board"
 	"testing"
 )
 

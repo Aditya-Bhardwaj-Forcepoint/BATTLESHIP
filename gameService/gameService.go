@@ -1,9 +1,9 @@
 package gameService
 
 import (
-	"battleship/board"
-	"battleship/player"
-	"battleship/ship"
+	"battleship/components/board"
+	"battleship/components/player"
+	"battleship/components/ship"
 	"fmt"
 )
 
