@@ -3,18 +3,18 @@ package ship
 
 import (
 	"battleship/components/board"
+	"fmt"
 	"math/rand"
 	"time"
 )
 
-type ShipInfo struct {
-	orient uint8
+type shipCoord struct {
 	xCoord uint8
 	yCoord uint8
 }
 
 // An array/struct to store the address of first compartment of each ship
-var AllShips []ShipInfo
+var AllShips = make(map[uint8][]shipCoord) // map[size][(),(),()...Coordinates]
 
 func GenerateRandomShips(b *board.Board) {
 	// This array contains the sizes of the ships
@@ -53,15 +53,19 @@ func GenerateRandomShips(b *board.Board) {
 				if flag1 != 1 { // The choosen index and it's following cells are empty. So, we can create our new ship there.
 					// Making the ship and storing it in AllShips slice
 					// ship := make([]*board.Status, size)
+					ship := make([]shipCoord, size)
 					for i := 0; i < size; i++ {
 						(*b.PtrToBoard)[dy][dx+i] = board.Ship
+
+						comp := shipCoord{
+							xCoord: uint8(dx + i),
+							yCoord: uint8(dy),
+						}
+
+						ship[i] = comp
 					}
-					shp := ShipInfo{
-						orient: 0,
-						xCoord: uint8(dx),
-						yCoord: uint8(dy),
-					}
-					AllShips = append(AllShips, shp)
+
+					AllShips[uint8(size)] = ship
 				} else { // The choosen slice is already occupied by another ship
 					goto pickIndex
 				}
@@ -91,21 +95,42 @@ func GenerateRandomShips(b *board.Board) {
 				}
 
 				if flag2 != 1 {
+					var ship = make([]shipCoord, size)
 					for i := 0; i < size; i++ {
 						(*b.PtrToBoard)[dy+i][dx] = board.Ship
+
+						comp := shipCoord{
+							xCoord: uint8(dx),
+							yCoord: uint8(dy + i),
+						}
+
+						ship[i] = comp
+
 					}
-					shp := ShipInfo{
-						orient: 1,
-						xCoord: uint8(dx),
-						yCoord: uint8(dy),
-					}
-					AllShips = append(AllShips, shp)
+
+					AllShips[uint8(size)] = ship
 				} else {
 					goto pickIndex2
 				}
 			} else {
 				goto pickIndex2
 			}
+		}
+	}
+}
+
+func CheckShip(b *board.Board) {
+	var flag bool = true
+	for sz, ship := range AllShips {
+		flag = true
+		for j := 0; j < int(sz); j++ {
+			if b.GetStatus(ship[j].yCoord, ship[j].xCoord) != board.Hit {
+				flag = false
+			}
+		}
+		if flag == true {
+			fmt.Print("\n\n", "Ship ", sz, " is completely destroyed", "\n")
+			delete(AllShips, sz)
 		}
 	}
 }

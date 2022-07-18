@@ -88,5 +88,8 @@ func PrintBoard(b *board.Board) {
 		fmt.Printf("\t%d", j)
 	}
 
+	ship.CheckShip(b)
+
 	fmt.Printf("\n\n")
+
 }
