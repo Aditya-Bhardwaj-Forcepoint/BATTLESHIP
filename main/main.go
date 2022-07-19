@@ -2,7 +2,7 @@
 package main
 
 import (
-	"battleship/gameService"
+	"battleship/services/gameService"
 	"fmt"
 )
 
